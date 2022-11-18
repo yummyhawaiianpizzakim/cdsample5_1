@@ -1,6 +1,7 @@
 package com.example.cdsample5.screens
 
 //import com.example.cdsample5.LectureRoomes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
@@ -19,45 +21,76 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.example.cdsample5.ImageContent
-import com.example.cdsample5.Place
-import com.example.cdsample5.PlaceContent
-import com.example.cdsample5.places
+import com.example.cdsample5.*
+
 
 @Composable
-fun Reserving() {
-        Column(
-            modifier = Modifier
-                .wrapContentHeight()
-                .fillMaxWidth()
-        ) {
-            Spacer(Modifier.height(16.dp))
-            BackLayerTextField("Search", "Search dummy...", Icons.Default.Search)
-            Spacer(Modifier.height(16.dp))
-            BackLayerTextField("Date", "Date dummy...", Icons.Default.DateRange)
-            Spacer(Modifier.height(16.dp))
-            BackLayerTextField("Place", "Place dummy...", Icons.Default.Place)
-            Spacer(Modifier.height(8.dp))
+fun Reserving(
+    modifier: Modifier
+) {
+    val datepicker = DatePicker(modifier = Modifier)
+    Column(
+        modifier = Modifier
+            .wrapContentHeight()
+            .fillMaxWidth()
+    ) {
+        Spacer(Modifier.height(16.dp))
+        BackLayerTextField("Search", "Search dummy...", Icons.Default.Search)
+        Spacer(Modifier.height(16.dp))
+        Button(
+            onClick = { datepicker },
+            colors = ButtonDefaults.buttonColors(
+//                    containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colors.onSurface
+                    .copy(alpha = 0.12f)
+            ),
+            shape = MaterialTheme.shapes.small,
+            modifier = modifier
+                .padding(vertical = 20.dp)
+                .height(54.dp),
+            border = BorderStroke(1.dp, MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
 
-            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                Text(
-                    text = "SubHeader",
-                    modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp, bottom = 8.dp)
-                )
-            }
-            Divider(
+        ) {
+            Text(
+                text = "Date",
                 modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .background(Color.LightGray)
-                    .height(1.dp)
+                    .fillMaxWidth()
+                    .weight(1.8f)
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            LazyColumn(
-                contentPadding = PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(places) { place ->
-                    PlacesToBookVerticalComponent(place = place)
+            Icon(
+                imageVector = Icons.Filled.ArrowDropDown,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.2f)
+            )
+        }
+
+
+        BackLayerTextField("Date", "Date dummy...", Icons.Default.DateRange)
+        Spacer(Modifier.height(16.dp))
+        BackLayerTextField("Place", "Place dummy...", Icons.Default.Place)
+        Spacer(Modifier.height(8.dp))
+
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+            Text(
+                text = "SubHeader",
+                modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp, bottom = 8.dp)
+            )
+        }
+        Divider(
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .background(Color.LightGray)
+                .height(1.dp)
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        LazyColumn(
+            contentPadding = PaddingValues(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(places) { place ->
+                PlacesToBookVerticalComponent(place = place)
             }
         }
 
@@ -81,7 +114,7 @@ fun PlacesToBookVerticalComponent(place: Place) {
 
 
 @Composable
-private fun BackLayerTextField(
+fun BackLayerTextField(
     label: String,
     placeHolder: String,
     imageVector: ImageVector
@@ -111,3 +144,12 @@ private fun BackLayerTextField(
     )
 }
 
+
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview1() {
+//    Cdsample5Theme {
+//        Reserving()
+//    }
+//}

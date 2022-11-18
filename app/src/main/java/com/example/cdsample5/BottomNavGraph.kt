@@ -1,6 +1,7 @@
 package com.example.cdsample5
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +16,7 @@ fun BottomNavGraph(navController: NavHostController) {
     startDestination = BottomBarScreen.Reserving.route
     ) {
         composable(route = BottomBarScreen.Reserving.route) {
-            Reserving()
+            Reserving(modifier = Modifier)
         }
         composable(route = BottomBarScreen.Profile.route) {
             ProfileScreen()
